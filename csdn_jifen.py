@@ -6,17 +6,17 @@ import re, urllib, urllib2, requests, time, datetime, random
 from bs4 import BeautifulSoup 
    
 login_url = 'http://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn'
-content = ['下载看看能不能用', 
-            '不错，可以使用', 
-            '不错，写的挺清晰的', 
-            '收藏，谢谢分享！', 
-            '资源很好，多谢楼主分享……', 
-            '非常好用，谢谢了……', 
-            '很好很强大，感觉非常好', 
-            '可以用，非常感谢……', 
-            '值得下载，有帮助', 
-            '比较有参考价值', 
-            '还不错，给了我很大帮助'
+content = ['看看能不能用,内容清楚，很不错', 
+            '初学者的好资料, 不错，可以使用', 
+            '资料全面不 错，写的挺清晰的', 
+            '很好的资源，解决了大问题, 收藏，谢谢分享！', 
+            '详细的资源, 细节很全面很好，多谢楼主分享……', 
+            '不错的资料, 很nice,非常好用，谢谢了……', 
+            '终于找到了很好的东西, 很好很强大，感觉非常好', 
+            '详实全面的资料, 可以用，非常感谢……', 
+            '清晰完整的资料, 值得下载，有帮助', 
+            '经典的资料, 比较有参考价值', 
+            '介绍了很多基本的内容, 还不错，给了我很大帮助'
  ] 
    
    
@@ -42,7 +42,7 @@ def get_back_csdn_jifen():
      lt = bs.find(attrs={'name': 'lt'})['value'] 
    
      # 请求参数 
-     payload = {'username': 'dwlitt', 'password': 'abcxyz123', 'lt': lt, '_eventId': 'submit', 
+     payload = {'username': 'xxx', 'password': 'xxx', 'lt': lt, '_eventId': 'submit', 
                 'execution': execution} 
      # make 请求 
      req = session.post(login_url, data=payload, headers=headers) 
