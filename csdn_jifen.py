@@ -1,7 +1,8 @@
 ﻿#!/usr/bin/python
 
 # coding:utf-8 
-   
+
+import getpass   
 import re, urllib, urllib2, requests, time, datetime, random 
 from bs4 import BeautifulSoup 
    
@@ -21,11 +22,18 @@ content = ['看看能不能用,内容清楚，很不错',
    
    
 def get_ranom_time(): 
-     return str(int(time.time() * 1000)) 
-     pass
+    return str(int(time.time() * 1000)) 
+    pass
    
-   
-def get_back_csdn_jifen(): 
+def do_jifen():
+    username=raw_input("Please enter your user name: ")
+    #print "Your username is: ", username
+    password=getpass.getpass("Please enter your password: ")
+    print "Your username and password is: ", username, '    ******'
+    get_back_csdn_jifen(username,password)
+    pass
+
+def get_back_csdn_jifen(u,p): 
      # http请求头 
      headers = {"User-Agent": "    Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0", 
                 "Host": "passport.csdn.net", 
@@ -33,7 +41,8 @@ def get_back_csdn_jifen():
                 "Accept-Language": "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3", 
                 "Accept-Encoding": "gzip, deflate", 
                 "Connection": "keep-alive"
-     } 
+     }
+     print "Begin to visit the csdn page......"
      session = requests.session() 
      # 在请求之前先请求一遍登录页面获取参数，该参数用于真正登录请求时候作为请求头 
      # 参数包括lt和_eventId和execution 
@@ -42,8 +51,9 @@ def get_back_csdn_jifen():
      lt = bs.find(attrs={'name': 'lt'})['value'] 
    
      # 请求参数 
-     payload = {'username': 'xxx', 'password': 'xxx', 'lt': lt, '_eventId': 'submit', 
-                'execution': execution} 
+     #payload = {'username': 'xxx', 'password': 'xxx', 'lt': lt, '_eventId': 'submit', 'execution': execution}
+     payload = {'username': u, 'password': p, 'lt': lt, '_eventId': 'submit', 'execution': execution}
+
      # make 请求 
      req = session.post(login_url, data=payload, headers=headers) 
      # 到download页面 
@@ -92,11 +102,14 @@ def get_back_csdn_jifen():
              else: 
                  print detail_name, '评价出错', 'succ_code', succ_code 
              pass
+             print "Now suspended for aproximately 60 seconds ......"
              time.sleep(random.randint(70, 90))  # sleep一个比较长的时间，因为csdn要求 两次评论需要间隔60秒 
          pass
      pass
    
    
 if __name__ == '__main__': 
-    get_back_csdn_jifen() 
+    #get_back_csdn_jifen()
+    do_jifen()
     pass
+
