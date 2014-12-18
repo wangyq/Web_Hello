@@ -42,7 +42,7 @@ def get_back_csdn_jifen(u,p):
                 "Accept-Encoding": "gzip, deflate", 
                 "Connection": "keep-alive"
      }
-     print "Begin to visit the csdn page......"
+     print "Begin to visit csdn's web pages ......"
      session = requests.session() 
      # 在请求之前先请求一遍登录页面获取参数，该参数用于真正登录请求时候作为请求头 
      # 参数包括lt和_eventId和execution 
@@ -102,7 +102,7 @@ def get_back_csdn_jifen(u,p):
              else: 
                  print detail_name, '评价出错', 'succ_code', succ_code 
              pass
-             print "Now suspended for aproximately 60 seconds ......"
+             print "Now being suspended for aproximately 60 seconds ......"
              time.sleep(random.randint(70, 90))  # sleep一个比较长的时间，因为csdn要求 两次评论需要间隔60秒 
          pass
      pass
