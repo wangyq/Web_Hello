@@ -26,15 +26,17 @@ is_py3 = (_ver[0] == 3)
 
 if is_py2:
     import urllib, urllib2
-    xrange=xrange
+    xrange = xrange
+    xinput = raw_input
     pass
 
 elif is_py3:
     import urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse
-    xrange=range
+    xrange = range
+    xinput = input
     pass
 
-import getpass   
+import getpass 
 import re, requests, time, datetime, random 
 from bs4 import BeautifulSoup                # pip install beautifulsoup4 
    
@@ -58,7 +60,7 @@ def get_ranom_time():
     pass
    
 def do_jifen():
-    username=input("Please enter your user name: ")
+    username = xinput("Please enter your user name: ")
     #print "Your username is: ", username
     password=getpass.getpass("Please enter your password: ")
     print("Your username and password is: ", username, '    ******')
@@ -74,7 +76,7 @@ def get_back_csdn_jifen(u,p):
                 "Accept-Encoding": "gzip, deflate", 
                 "Connection": "keep-alive"
      }
-     print("Begin to visit csdn's web pages ......")
+     print("Connecting to  csdn web pages ......")
      session = requests.session() 
      # 在请求之前先请求一遍登录页面获取参数，该参数用于真正登录请求时候作为请求头 
      # 参数包括lt和_eventId和execution 
@@ -140,7 +142,7 @@ def get_back_csdn_jifen(u,p):
              else: 
                  print(detail_name, '评价出错', 'succ_code', succ_code)
              pass
-             print("Now being suspended for aproximately 60 seconds ......")
+             print("Being suspended for aproximately 60 seconds ......")
              time.sleep(random.randint(70, 90))  # sleep一个比较长的时间，因为csdn要求 两次评论需要间隔60秒 
          pass
      pass
