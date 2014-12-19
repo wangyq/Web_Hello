@@ -37,7 +37,8 @@ elif is_py3:
     pass
 
 import getpass 
-import re, requests, time, datetime, random 
+import requests                            # pip install requests
+import re, time, datetime, random 
 from bs4 import BeautifulSoup                # pip install beautifulsoup4 
    
 login_url = 'http://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn'
