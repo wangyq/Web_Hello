@@ -25,9 +25,13 @@ is_py3 = (_ver[0] == 3)
 # ---------
 
 if is_py2:
-    import urllib, urllib2 
+    import urllib, urllib2
+    xrange=xrange
+    pass
+
 elif is_py3:
     import urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse
+    xrange=range
     pass
 
 import getpass   
@@ -98,14 +102,14 @@ def get_back_csdn_jifen(u,p):
          'X-Requested-With': 'XMLHttpRequest'
      } 
      headers['Host'] = 'download.csdn.net'
-     try:
-         pages = xrange(1, max_page + 1)
-     except NameError:
-         pages = range(1, max_page + 1)
-     pass
+     #try:
+     #    pages = xrange(1, max_page + 1)
+     #except NameError:
+     #    pages = range(1, max_page + 1)
+     #pass
      # 遍历每一页 
-     #for page_index in xrange(1, max_page + 1): 
-     for page_index in pages: 
+     #for page_index in pages: 
+     for page_index in xrange(1, max_page + 1): 
          page_url = 'http://download.csdn.net/my/downloads/%s' % page_index 
          every_page_bs = BeautifulSoup(session.get(page_url, headers=headers).text) 
          comment_list = every_page_bs.find_all('a', {'class': 'btn-comment'}) 
