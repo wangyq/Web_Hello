@@ -143,7 +143,7 @@ def get_back_csdn_jifen(u,p):
              else: 
                  print(detail_name, '评价出错', 'succ_code', succ_code)
              pass
-             print("Being suspended for aproximately 60 seconds ......")
+             print("Being suspended for approximately 60 seconds ......")
              time.sleep(random.randint(70, 90))  # sleep一个比较长的时间，因为csdn要求 两次评论需要间隔60秒 
          pass
      pass
