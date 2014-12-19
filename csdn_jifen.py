@@ -2,9 +2,37 @@
 
 # coding:utf-8 
 
+# Python 2 and 3:
+from __future__ import print_function    # (at top of module)
+
+import sys
+
+# -------
+# Pythons
+# -------
+
+# Syntax sugar.
+_ver = sys.version_info
+
+#: Python 2.x?
+is_py2 = (_ver[0] == 2)
+
+#: Python 3.x?
+is_py3 = (_ver[0] == 3)
+
+# ---------
+# Specifics
+# ---------
+
+if is_py2:
+    import urllib, urllib2 
+elif is_py3:
+    import urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse
+    pass
+
 import getpass   
-import re, urllib, urllib2, requests, time, datetime, random 
-from bs4 import BeautifulSoup 
+import re, requests, time, datetime, random 
+from bs4 import BeautifulSoup                # pip install beautifulsoup4 
    
 login_url = 'http://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn'
 content = ['看看能不能用,内容清楚，很不错', 
@@ -26,10 +54,10 @@ def get_ranom_time():
     pass
    
 def do_jifen():
-    username=raw_input("Please enter your user name: ")
+    username=input("Please enter your user name: ")
     #print "Your username is: ", username
     password=getpass.getpass("Please enter your password: ")
-    print "Your username and password is: ", username, '    ******'
+    print("Your username and password is: ", username, '    ******')
     get_back_csdn_jifen(username,password)
     pass
 
@@ -42,7 +70,7 @@ def get_back_csdn_jifen(u,p):
                 "Accept-Encoding": "gzip, deflate", 
                 "Connection": "keep-alive"
      }
-     print "Begin to visit csdn's web pages ......"
+     print("Begin to visit csdn's web pages ......")
      session = requests.session() 
      # 在请求之前先请求一遍登录页面获取参数，该参数用于真正登录请求时候作为请求头 
      # 参数包括lt和_eventId和execution 
@@ -70,8 +98,14 @@ def get_back_csdn_jifen(u,p):
          'X-Requested-With': 'XMLHttpRequest'
      } 
      headers['Host'] = 'download.csdn.net'
+     try:
+         pages = xrange(1, max_page + 1)
+     except NameError:
+         pages = range(1, max_page + 1)
+     pass
      # 遍历每一页 
-     for page_index in xrange(1, max_page + 1): 
+     #for page_index in xrange(1, max_page + 1): 
+     for page_index in pages: 
          page_url = 'http://download.csdn.net/my/downloads/%s' % page_index 
          every_page_bs = BeautifulSoup(session.get(page_url, headers=headers).text) 
          comment_list = every_page_bs.find_all('a', {'class': 'btn-comment'}) 
@@ -93,16 +127,16 @@ def get_back_csdn_jifen(u,p):
                  'content': random.choice(content), 
                  't': get_ranom_time() 
              } 
-             print detail_name,'开始评价'
+             print(detail_name,'开始评价')
              response = session.get(post_comment_url, params=param_dict) 
              res = response.text 
              succ_code = res[res.rfind(':') + 1:res.rfind('})')] 
              if succ_code == '1' and response.status_code == 200: 
-                 print detail_name, '已经评价'
+                 print(detail_name, '已经评价')
              else: 
-                 print detail_name, '评价出错', 'succ_code', succ_code 
+                 print(detail_name, '评价出错', 'succ_code', succ_code)
              pass
-             print "Now being suspended for aproximately 60 seconds ......"
+             print("Now being suspended for aproximately 60 seconds ......")
              time.sleep(random.randint(70, 90))  # sleep一个比较长的时间，因为csdn要求 两次评论需要间隔60秒 
          pass
      pass
